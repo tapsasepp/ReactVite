@@ -12,6 +12,7 @@ function TodoTable(props) {
               <tr key={index}>
                 <td>{item.description}</td>
                 <td>{item.date}</td>
+                <td><button onClick={() => props.deleteLine(index)}>Delete</button></td>
               </tr>
             ))}
           </tbody>

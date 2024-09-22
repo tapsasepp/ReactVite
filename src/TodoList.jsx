@@ -29,13 +29,18 @@
     setTodos([...todos, toDoList]);
     setToDoList({ description:"", date: ""});
   };
+
+  const deleteLine = (index) => {
+    const deleteToDo = todos.filter((todo, i) => i !== index);
+    setTodos(deleteToDo);
+  }
   
   return (
     <div>
       Description:<input type="text" onChange={handleDescChange} value={toDoList.description} />
       Date: <input type="text" onChange={handleDateChange} value={toDoList.date} />
       <button onClick={addTodo}>Add</button>
-      <TodoTable todos={todos} />
+      <TodoTable todos={todos} deleteLine={deleteLine} />
     </div>
   );
   }
