@@ -47,23 +47,63 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+.add_button {
   border-radius: 8px;
   border: 2px solid transparent;
+  border-color: green;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #5e5e5e;
+  background-color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s;
+  margin-top: 10px;
 }
-button:hover {
-  border-color: #000000;
+
+.delete_button {
+  border-radius: 8px;
+  border: 2px solid transparent;
+  border-color: red;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin-top: 10px;
 }
+
+.add_button:hover {
+  background-color:  rgb(53, 136, 53);
+}
+.delete_button:hover {
+  background-color: rgb(216, 63, 63);
+}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.input-container {
+  display: flex;
+  gap: 5px;
+} 
+
+input {
+  padding: 16.5px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+input:focus {
+  border-color: #646cff;
+  outline: none;
 }
 
 @media (prefers-color-scheme: light) {

@@ -5,6 +5,12 @@
   import { AgGridReact } from "ag-grid-react";
   import "ag-grid-community/styles/ag-grid.css";
   import "ag-grid-community/styles/ag-theme-material.css";
+  import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+  import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+  import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+  import dayjs from 'dayjs';
+  import 'dayjs/locale/en-gb';
+  import DeleteIcon from '@mui/icons-material/Delete';
  
 
     function TodoList() {
@@ -14,7 +20,7 @@
     const [todos, setTodos] = useState([]);
     const [toDoList, setToDoList] = useState({
       description: "",
-      date: "",
+      date: null,
       priority: "",
     });
     const gridRef = useRef();
@@ -38,14 +44,18 @@
     setToDoList({ ...toDoList, priority: event.target.value });
   };
 
-  const handleDateChange = (event) => {
+  const handleDateChange = (inputDate) => {
     setToDoList({
-      ...toDoList, date: event.target.value});
+      ...toDoList, date: inputDate});
   };
   
   const addTodo = () => {
-    setTodos([...todos, toDoList]);
-    setToDoList({ description:"", date: "", priority:"",});
+    const formatDate = {
+      ...toDoList,
+      date: toDoList.date ? dayjs(toDoList.date).format("YYYY-MM-DD") : ""
+    }
+    setTodos([...todos, formatDate]);
+    setToDoList({ description:"", date: null, priority:"",});
   };
 
   const deleteLine = () => {
@@ -53,14 +63,12 @@
       setTodos(todos.filter((todos, index) => 
         index != gridRef.current.getSelectedNodes()[0].id))
     }
-    else {
-      alert('Select a row first!');
-    }
   };
   
   // Renders
   return (
     <>
+    <div className="input-container">
       <input 
         placeholder="Description" 
         onChange={handleDescChange} 
@@ -69,12 +77,16 @@
         placeholder="Priority" 
         onChange={handlePriorityChange} 
         value={toDoList.priority} /> 
-      <input 
-        placeholder="Date" 
-        onChange={handleDateChange} 
-        value={toDoList.date} />
-      <button onClick={addTodo}>Add</button>
-      <button onClick={deleteLine}>Delete</button>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+      <DatePicker value={toDoList.date} onChange={(handleDateChange)} sx={{ width: '100%' }} />
+      </LocalizationProvider>
+      </div>
+      
+      <button className="add_button" onClick={addTodo}>Add</button>
+      <button icon={<DeleteIcon />} className="delete_button" onClick={deleteLine}>Delete</button>
+      
+
       <div className="ag-theme-material" style={{width: 700, height: 500}}>
         <AgGridReact 
           ref={gridRef}
